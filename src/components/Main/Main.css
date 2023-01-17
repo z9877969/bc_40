@@ -1,0 +1,12 @@
+.main__container {
+  display: flex;
+  justify-content: center;
+}
+
+.class__red {
+  background-color: red;
+}
+
+.class__green {
+  background-color: green;
+}
