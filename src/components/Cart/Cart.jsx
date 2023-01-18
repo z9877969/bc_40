@@ -1,38 +1,46 @@
 import "./Cart.css";
+import sprite from "../../assets/icons/sprite.svg";
+import {
+  BtnRemoveProduct,
+  BtnSubmit,
+  ButtonClose,
+  CartContainer,
+  ProductCurrency,
+  ProductItemDescr,
+  ProductPrice,
+  ProductsList,
+  ProductsListItem,
+  ProductTitle,
+} from "./Cart.styled";
 
 const Cart = () => {
   return (
-    <div className="cart">
-      <button className="cart-btn-close" type="button">
-        {/* <!-- <svg className="cart-icon-close">
-        <use href="../../code/src/assets/icons/sprite.svg#icon-cross"></use>
-      </svg> --> */}
-        x
-      </button>
-      <ul className="cart-products">
-        <li className="cart-product">
+    <CartContainer isOpen={true}>
+      <ButtonClose type="button">
+        <svg>
+          <use href={sprite + "#icon-cross"}></use>
+        </svg>
+      </ButtonClose>
+      <ProductsList>
+        <ProductsListItem>
           <img
-            className="cart-image"
             src="https://content1.rozetka.com.ua/goods/images/big/238782224.jpg"
             alt=""
           />
-          <div className="cart-descr">
-            <h3 className="cart-model">ZTE RedMagic</h3>
-            <span className="cart-price">11999</span>
-            <span className="cart-currency">UAH</span>
-          </div>
-          <button className="cart-btn-remove" type="button">
-            {/* <!-- <svg className="cart-icon-remove">
-            <use href="../../code/src/assets/icons/sprite.svg#icon-bin2"></use>
-          </svg> --> */}
-            Remove
-          </button>
-        </li>
-      </ul>
-      <button className="cart-btn-order" type="button">
-        Submit
-      </button>
-    </div>
+          <ProductItemDescr>
+            <ProductTitle isSale={true}>ZTE RedMagic</ProductTitle>
+            <ProductPrice>11999</ProductPrice>
+            <ProductCurrency>UAH</ProductCurrency>
+          </ProductItemDescr>
+          <BtnRemoveProduct type="button">
+            <svg>
+              <use href={sprite + "#icon-bin2"}></use>
+            </svg>
+          </BtnRemoveProduct>
+        </ProductsListItem>
+      </ProductsList>
+      <BtnSubmit type="button">Submit</BtnSubmit>
+    </CartContainer>
   );
 };
 
