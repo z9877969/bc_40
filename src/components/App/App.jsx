@@ -1,12 +1,9 @@
-import TodoForm from "../TodoForm/TodoForm";
-import TodoList from "../TodoList/TodoList";
-import { todo } from "../../data/todo";
+import TodoPage from "../TodoPage/TodoPage";
 
 const App = () => {
   return (
     <>
-      <TodoForm />
-      <TodoList todo={todo} />
+      <TodoPage />
     </>
   );
 };
