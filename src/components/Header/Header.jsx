@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
+
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ openCart }) => {
   return (
     <header className="header">
       <a href="/" className="header__logo">
@@ -12,12 +14,20 @@ const Header = () => {
         <span className="header__user-email">user@mail.com</span>
       </div>
       <div className="header__cart-info">
-        <button type="button" className="header__btn-cart">
+        <button
+          type="button"
+          className="header__btn-cart"
+          onClick={() => openCart()}
+        >
           Open Cart
         </button>
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  openCart: PropTypes.func.isRequired,
 };
 
 export default Header;

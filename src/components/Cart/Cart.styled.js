@@ -24,10 +24,8 @@ export const CartContainer = styled.div`
   transition: transform 0.5s linear;
 
   ${(props) => {
-    console.log(props);
-
     return props.isOpen ? "transform: translateX(-100%);" : "";
-  }}/* "" */
+  }}
 `;
 
 export const ButtonClose = styled.button`

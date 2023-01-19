@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
 import Section from "../Section/Section";
 import Filter from "../Filter/Filter";
 import ProductsList from "../ProductsList/ProductsList";
 import products from "../../data/products.json";
-// import "./Main.css";
+import { useState } from "react";
 
 const containerStyles = {
   display: "flex",
@@ -10,15 +11,20 @@ const containerStyles = {
   backgroundColor: "red",
 };
 
-const Main = () => {
+const Main = ({ addToCart }) => {
+
   return (
     <Section>
       <div style={containerStyles}>
         <Filter />
-        <ProductsList products={products} />
+        <ProductsList products={products} addToCart={addToCart} />
       </div>
     </Section>
   );
+};
+
+Main.propTypes = {
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default Main;

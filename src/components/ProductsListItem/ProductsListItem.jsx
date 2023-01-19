@@ -2,14 +2,18 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import s from "./ProductsListItem.module.css";
 
-const ProductsListItem = ({ url, model, price, currency, isSale }) => {
+const ProductsListItem = ({
+  url,
+  model,
+  price,
+  currency,
+  isSale,
+  addToCart,
+}) => {
   return (
     <li className={s.item}>
       <div className={s.imageWrapper}>
-        {/* {isSale && <p className={s.sale}>Акція</p>} */}
-        {/* <p className={isSale ? s.saleIsActive : s.sale}>Акція</p> */}
         <p className={clsx(s.sale, isSale && s.isActive)}>Акція</p>
-
         <img className={s.image} src={url} alt={model} />
       </div>
       <div className={s.descr}>
@@ -24,7 +28,11 @@ const ProductsListItem = ({ url, model, price, currency, isSale }) => {
           </>
         )}
       </div>
-      <button className={s.btnBuy} type="button">
+      <button
+        className={s.btnBuy}
+        type="button"
+        onClick={() => addToCart({ url, model, price, currency })}
+      >
         Купити
       </button>
     </li>
@@ -41,6 +49,7 @@ ProductsListItem.propTypes = {
   ]).isRequired,
   currency: PropTypes.string.isRequired,
   isSale: PropTypes.bool.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default ProductsListItem;

@@ -12,3 +12,6 @@ root.render(
     </MainStyledWrapper>
   </React.StrictMode>
 );
+
+console.dir(document.body);
+console.dir(new App().render());
