@@ -1,17 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import "./index.css";
 import App from "./components/App/App";
-import MainStyledWrapper from "./components/MainStyledWrapper/MainStyledWrapper";
+import "./index.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MainStyledWrapper>
-      <App />
-    </MainStyledWrapper>
+    <App />
   </React.StrictMode>
 );
-
-console.dir(document.body);
-console.dir(new App().render());

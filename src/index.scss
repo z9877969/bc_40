@@ -1,7 +1,4 @@
-import { createGlobalStyle } from "styled-components";
-
-export const GlobalStyle = createGlobalStyle`
-  body {
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -17,16 +14,7 @@ code {
 
 ul {
   list-style: none;
-  padding: 0;
-}
-
-ul,
-li,
-h1,
-h2,
-h3,
-p {
-  margin: 0;
+  padding-left: 0;
 }
 
 img {
@@ -34,7 +22,15 @@ img {
   width: 100%;
 }
 
-button:active {
-  transform: scale(0.95);
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
 }
-`;
+
+button:active {
+  scale: 0.95;
+}

@@ -1,12 +1,11 @@
 # BC_40
 
-## l-03.events
+## l-04.forms
 
-## // counter
-## 1) events
-## 2) statefull vs stateless
+### 1) controled input
+### 2) text, date, radio
+### 3) checkbox
+### 4) CRUD with collection
+### 5) filter by priority
 
-## // shop
-## 3) open cart
-## 4) add product vulue
-## 5) add product to cart
+### 6) filter in iShop
