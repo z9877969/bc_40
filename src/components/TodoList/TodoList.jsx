@@ -1,20 +1,26 @@
 import PropTypes from "prop-types";
-import s from "./TodoList.module.scss";
+import s from "./TodoList.module.css";
 import sprite from "../../assets/icons/sprite.svg";
 
-const TodoList = ({ todo }) => {
+const TodoList = ({ todo, removeTodo }) => {
   return (
     <ul className={s.container}>
-      {todo.map(({ title, descr, id, date }) => (
+      {todo.map(({ title, descr, id, date, priority }) => (
         <li key={id} className={s.toDoItem}>
           <p className={s.date}>{date}</p>
           <h3 className={`${s.title} ${true && s.isDone}`}>{title}</h3>
+          <p className={`${s.descr} ${true && s.isDone}`}>PRIORITY - {priority}</p>
           <p className={`${s.descr} ${true && s.isDone}`}>{descr}</p>
           <label className={s.status}>
             <input type="checkbox" name="status" />
             Done
           </label>
-          <button className={s.todoBtn}>
+          <button
+            className={s.todoBtn}
+            onClick={() => {
+              removeTodo(id);
+            }}
+          >
             <svg className={s.icon}>
               <use href={sprite + "#icon-trash"}></use>
             </svg>
@@ -27,6 +33,7 @@ const TodoList = ({ todo }) => {
 
 TodoList.propTypes = {
   todo: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeTodo: PropTypes.func.isRequired,
 };
 
 export default TodoList;

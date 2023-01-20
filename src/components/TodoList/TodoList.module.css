@@ -1,3 +1,6 @@
+@value vars: "../../assets/styles/vars.css";
+@value blue, red, green from vars;
+
 .close {
   display: inline-block;
   color: red;
@@ -16,7 +19,8 @@
 
 .toDoItem {
   padding: 10px;
-  background-color: rgb(48, 142, 144);
+  background-color: green;
+  /* background-color: rgb(48, 142, 144); */
   color: rgb(61, 56, 10);
 }
 
