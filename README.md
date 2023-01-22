@@ -1,11 +1,6 @@
 # BC_40
 
-## l-04.forms
+## l-05.life-cycles
 
-### 1) controled input
-### 2) text, date, radio
-### 3) checkbox
-### 4) CRUD with collection
-### 5) filter by priority
-
-### 6) filter in iShop
+### 1) life-cycles method - https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+### 2) localStorage

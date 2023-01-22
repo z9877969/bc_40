@@ -2,35 +2,23 @@ import { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 import s from "./TodoForm.module.scss";
 
-// const dayPeriods = ["morning", "afternoon", "evening"];
+const getCurDate = () => {
+  const date = new Date();
 
-// const curDate = () => {
-//   const date = new Date();
-//   const fY = date.getFullYear();
-//   const fM = date.getMonth() + 1;
-
-//   return `${fY}-${fM}-`;
-// };
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+};
 
 class ToDoForm extends Component {
   state = {
-    date: "2023-01-20", // newValue
+    date: getCurDate(),
     title: "",
-    descr: "",
-    priority: "", // low | medium | high
-    dayPeriods: ["morning", "evening"],
+    priority: "",
   };
 
   handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
-    if (type === "checkbox") {
-      this.setState((prev) => ({
-        [name]: checked
-          ? [...prev[name], value]
-          : prev[name].filter((el) => el !== value),
-      }));
-      return;
-    }
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
@@ -40,7 +28,7 @@ class ToDoForm extends Component {
   };
 
   render() {
-    const { date, title, priority, descr, dayPeriods } = this.state;
+    const { date, title, priority } = this.state;
     return (
       <form className={s.form} onSubmit={this.handleSubmit}>
         <label className={s.label}>
@@ -60,16 +48,6 @@ class ToDoForm extends Component {
             type="text"
             name="title"
             value={title}
-            onChange={this.handleChange}
-          />
-        </label>
-        <label className={s.label}>
-          <span> Description </span>
-          <input
-            className={s.input}
-            type="text"
-            name="descr"
-            value={descr}
             onChange={this.handleChange}
           />
         </label>
@@ -120,38 +98,6 @@ class ToDoForm extends Component {
               High
             </label>
           </div>
-        </div>
-        <div>
-          <label>
-            Morning
-            <input
-              type="checkbox"
-              name="dayPeriods"
-              value="morning"
-              checked={dayPeriods.includes("morning")}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Afternoon
-            <input
-              type="checkbox"
-              name="dayPeriods"
-              value="afternoon"
-              checked={dayPeriods.includes("afternoon")}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Evening
-            <input
-              type="checkbox"
-              name="dayPeriods"
-              value="evening"
-              checked={dayPeriods.includes("evening")}
-              onChange={this.handleChange}
-            />
-          </label>
         </div>
         <button className={s.submit} type="submit">
           Ok

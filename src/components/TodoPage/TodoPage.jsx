@@ -6,7 +6,7 @@ import { todo } from "../../data/todo";
 
 class TodoPage extends Component {
   state = {
-    todo: todo, // [el1, el2, ...]
+    todo: todo,
     filter: "all",
   };
 
