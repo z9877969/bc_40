@@ -1,21 +1,41 @@
+import { Component } from "react";
+import { createPortal } from "react-dom";
 import s from "./Modal.module.scss";
 
-const Modal = () => {
-  return (
-    <div className={s.backdrop}>
-      <h1 className={s.title}>
-        <a
-          href={
-            "https://www.wired.com/story/kazakhstan-cryptocurrency-mining-unrest-energy"
-          }
-          target="_blank"
-          rel="noreferrer"
-        >
-          {"As Kazakhstan Descends into Chaos, Crypto Miners Are at a Loss"}
-        </a>
-      </h1>
-    </div>
-  );
-};
+const modalRoot = document.querySelector("#modal");
+
+class Modal extends Component {
+  componentDidMount() {
+    window.addEventListener("keydown", this.closeModaleByEscape);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.closeModaleByEscape);
+  }
+
+  closeModaleByEscape = (e) => {
+    if (e.code === "Escape") {
+      this.props.closeModal();
+    }
+  };
+
+  render() {
+    const { modalData, closeModal } = this.props;
+    const { url, title } = modalData;
+    return createPortal(
+      <div
+        className={s.backdrop}
+        onClick={(e) => e.currentTarget === e.target && closeModal()}
+      >
+        <h1 className={s.title}>
+          <a href={url} target="_blank" rel="noreferrer">
+            {title}
+          </a>
+        </h1>
+      </div>,
+      modalRoot
+    );
+  }
+}
 
 export default Modal;
