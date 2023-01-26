@@ -1,116 +1,77 @@
-import { Component, PureComponent } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useEffect, useRef } from "react";
 import ToDoForm from "../TodoForm/TodoForm";
 import ToDoList from "../TodoList/TodoList";
 import PrioritySelect from "../PrioritySelect/PrioritySelect";
 import { todo } from "../../data/todo";
 
-class TodoPage extends Component {
-  state = {
-    todo: [],
-    filter: "all",
-    theme: null,
+const TodoPage = ({ theme }) => {
+  const [todo, setTodo] = useState(
+    JSON.parse(localStorage.getItem("todo")) ?? []
+  );
+  const [filter, setFilter] = useState("all");
+
+  const addTodo = (todo) => {
+    setTodo((prevTodo) => [...prevTodo, todo]);
   };
 
-  static getDerivedStateFromProps(newProps, state) {
-    console.log("gDSFP", newProps);
-    console.log("this :>> ", this);
-    return { theme: newProps.theme };
-  }
-
-  componentDidMount() {
-    console.log("CDM");
-    // fetch
-    // window.addEventListener("keydown")
-    // setInterval
-    const todo = JSON.parse(localStorage.getItem("todo")) ?? [];
-    this.setState({ todo: todo });
-  }
-
-  // shouldComponentUpdate(newProps, newState) {
-  //   console.log("newProps :>> ", newProps);
-  //   console.log("newState :>> ", newState);
-  //   if (
-  //     newProps.theme === this.props.theme &&
-  //     newState.todo === this.state.todo &&
-  //     newState.filter === this.state.filter &&
-  //     newState.theme === this.state.theme
-  //   )
-  //     return false;
-
-  //   return true; // false
-  // }
-
-  getSnapshotBeforeUpdate() {
-    return document.body.clientHeight;
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // this.setState({ filter: "all" });
-    console.log("snapshot :>> ", snapshot);
-    if (prevState.todo !== this.state.todo) {
-      localStorage.setItem("todo", JSON.stringify(this.state.todo));
-      window.scrollTo({
-        top: snapshot,
-        behavior: "smooth",
-      });
-    }
-  }
-
-  addTodo = (newTodo) => {
-    this.setState((prev) => ({ todo: [...prev.todo, newTodo] }));
+  const removeTodo = (id) => {
+    setTodo((prevTodo) => prevTodo.filter((todo) => todo.id !== id));
   };
 
-  removeTodo = (id) => {
-    this.setState((prev) => ({
-      todo: prev.todo.filter((el) => el.id !== id),
-    }));
+  const changeFilter = (e) => {
+    setFilter(e.target.value);
   };
 
-  filterTodo = () => {
-    const { filter, todo } = this.state;
+  const filterTodo = () => {
+    console.log("Filter");
     if (filter === "all") return todo;
     return todo.filter((el) => el.priority === filter);
   };
 
-  handleChange = (e) => {
-    this.setState({ filter: e.target.value });
-  };
+  const filteredTodo = filterTodo(); // todo | filter
 
-  render() {
-    console.log("Render");
-    const filteredTodo = this.filterTodo();
+  // const isFirstRenderRef = useRef(true); // 1-render -> true; 2-render -> false
 
-    // this.setState({ filter: "all" }); не можна!!!
-    return (
-      <div
-        style={{
-          backgroundColor: this.state.theme === "dark" ? "blue" : "yellow",
-        }}
-      >
-        <ToDoForm addTodo={this.addTodo} />
-        <PrioritySelect
-          value={this.state.filter}
-          onChange={this.handleChange}
-        />
-        <ToDoList todo={filteredTodo} removeTodo={this.removeTodo} />
-        <button
-          onClick={() =>
-            this.setState((prev) => ({
-              todo: [
-                ...prev.todo,
-                ...prev.todo
-                  .slice(0, 12)
-                  .map((el) => ({ ...el, id: uuidv4() })),
-              ],
-            }))
-          }
-        >
-          Show More
-        </button>
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }, [todo]);
+
+  // useEffect(() => {
+  //   console.log("useEffect");
+  //   if (!isFirstRenderRef.current) {
+  //     localStorage.setItem("todo", JSON.stringify(todo)); // LS -> todo: []
+  //   }
+  // }, [todo]);
+
+  // useEffect(() => {
+  //   console.log("useEffect one time");
+  //   isFirstRenderRef.current = false;
+  //   const todo = JSON.parse(localStorage.getItem("todo")) ?? [];
+  //   setTodo(todo);
+  // }, []);
+
+  console.log("RENDER");
+
+  return (
+    <div
+      style={{
+        backgroundColor: theme === "dark" ? "blue" : "yellow",
+      }}
+    >
+      <ToDoForm addTodo={addTodo} />
+      <PrioritySelect value={filter} onChange={changeFilter} />
+      <ToDoList todo={filteredTodo} removeTodo={removeTodo} />
+    </div>
+  );
+};
 
 export default TodoPage;
+
+// {
+//   // page -> fetch
+//   // page === 1
+//   // images.length = 12
+//   useEffect(() => {
+//     images.length === 12
+//   }, [images])
+// }

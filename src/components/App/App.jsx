@@ -1,36 +1,30 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 import TodoPage from "../TodoPage/TodoPage";
 
-class App extends Component {
-  state = {
-    theme: "light", // dark
-    isOpen: false,
+const App = () => {
+  const [theme, setTheme] = useState("light"); // theme = "dark"
+  // const [count, setCount] = useState(0);
+
+  const toggleTheme = () => {
+    // setTheme("dark");
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
-  render() {
-    return (
-      <>
-        <button
-          onClick={() => {
-            this.setState((prev) => ({
-              theme: prev.theme === "light" ? "dark" : "light",
-            }));
-          }}
-        >
-          Click
-        </button>
-        <button
-          onClick={() => {
-            this.setState((prev) => ({
-              isOpen: !prev.isOpen,
-            }));
-          }}
-        >
-          Open
-        </button>
-        <TodoPage theme={this.state.theme} />
-      </>
-    );
-  }
-}
+
+  // const changeCount = () => {
+  //   setCount(prevCount => prevCount + 5); // 0 + 5 -> prevCount = 5 count = 5
+  //   setCount(prevCount => prevCount + 5); // 0 + 5 -> prevCount = 10 count = 10
+  //   setCount(prevCount => prevCount + 5); // 0 + 5 -> prevCount = 15 count = 15
+  // };
+
+  console.log("theme :>> ", theme);
+
+  return (
+    <>
+      <button onClick={toggleTheme}>Toggle theme</button>
+      {/* <button onClick={changeCount}>Count - {count}</button> */}
+      <TodoPage theme={theme} />
+    </>
+  );
+};
 
 export default App;
