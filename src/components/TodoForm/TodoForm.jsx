@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Component } from "react";
+import { memo } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import s from "./TodoForm.module.scss";
 
 const getCurDate = () => {
@@ -11,49 +11,8 @@ const getCurDate = () => {
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 };
 
-const options = [
-  {
-    label: "Date",
-    name: "date",
-    type: "date",
-    placeholder: null,
-  },
-  {
-    label: "Title",
-    name: "title",
-    type: "text",
-    placeholder: "Input title",
-  },
-  {
-    label: "Priority",
-    name: "priority",
-    type: "radio",
-    placeholder: null,
-  },
-];
-
-const TodoForm = ({ addTodo, options }) => {
-  // const [date, setDate] = useState(getCurDate());
-  // const [title, setTitle] = useState("");
-  // const [priority, setPriority] = useState("");
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   switch (name) {
-  //     case "date":
-  //       setDate(value);
-  //       break;
-  //     case "title":
-  //       setTitle(value);
-  //       break;
-  //     case "priority":
-  //       setPriority(value);
-  //       break;
-  //     default:
-  //       return;
-  //   }
-  // };
-  const [form, setForm] = useState({
+const TodoForm = ({ addTodo }) => {
+  const [form, setForm] = useLocalStorage("todoForm", {
     date: getCurDate(),
     title: "",
     priority: "",
@@ -71,25 +30,20 @@ const TodoForm = ({ addTodo, options }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // addTodo({ date: date, title: title, priority: priority, id: uuidv4() });
-    addTodo({ ...form, id: uuidv4() });
+    addTodo({ ...form, id: uuidv4() }); // start addTodo
   };
+
+  // console.log("RENDER_FORM");
+
+  // let n = 0;
+  // while (n < 1e9) {
+  //   n++
+  // }
+
+  // console.log("RENDER_FORM_AFTER_CYCLE");
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
-      {/* {options.map((option) => (
-        <label className={s.label}>
-          <span> {option.label} </span>
-          <input
-            className={s.input}
-            name={option.name}
-            type={option.type}
-            value={form[option.name]}
-            // form = {date, title, priority}
-            onChange={handleChange}
-          />
-        </label>
-      ))} */}
       <label className={s.label}>
         <span> Date </span>
         <input
@@ -162,27 +116,4 @@ const TodoForm = ({ addTodo, options }) => {
   );
 };
 
-// class ToDoForm extends Component {
-//   state = {
-//     date: getCurDate(),
-//     title: "",
-//     priority: "",
-//   };
-
-//   handleChange = (e) => {
-//     const { name, value } = e.target;
-//     this.setState({ [name]: value });
-//   };
-
-//   handleSubmit = (e) => {
-//     e.preventDefault();
-//     this.props.addTodo({ ...this.state, id: uuidv4() });
-//   };
-
-//   render() {
-//     const { date, title, priority } = this.state;
-
-//   }
-// }
-
-export default TodoForm;
+export default memo(TodoForm); // () => {condition + memo return <TodoForm />} + memo
