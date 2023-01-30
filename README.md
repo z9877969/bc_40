@@ -2,7 +2,7 @@
 
 ## l-09.routing
 
-https://rozetka.com.ua/dacha-sad-ogorod/c2394297?color=red&size=l#321
+https://rozetka.com.ua/doc/v1/tshort/c2394297?color=red&size=l#321
 
 ### 1.url structure
 ### 2.BrowserRoter
@@ -12,3 +12,17 @@ https://rozetka.com.ua/dacha-sad-ogorod/c2394297?color=red&size=l#321
 ### 6.Link, NavLink, styled-component, activeLink
 ### 7.Params, useParams
 ### 8. Route - index, Outlet
+
+
+
+
+
+<!-- useEffect(() => {
+    count && clg()
+    // eslint-disable-next-line
+}, [count]) -->
+
+useMemo(() => {return "wer"}, [a,b,c]) -> "wer"
+useCallback(() => {return }, []) // ref1 -> () => {return }
+
+const ref = useRef(null) -> {current: null} -> ref.current = "qwe" -> {current: "qwe"} 

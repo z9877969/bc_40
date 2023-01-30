@@ -7,9 +7,9 @@ export const getTopNews = (country, page = 1) => {
   return axios
     .get("/top-headlines", {
       params: {
+        country,
         page,
         pageSize: 10,
-        country,
         apiKey: API_KEY,
       },
     })
