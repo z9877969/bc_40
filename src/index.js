@@ -12,6 +12,3 @@ root.render(
   </BrowserRouter>
   // </React.StrictMode>
 );
-
-// console.log('location :>> ', window.location);
-// console.log('history :>> ', window.history);

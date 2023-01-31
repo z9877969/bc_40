@@ -1,6 +1,6 @@
-import { Link, NavLink } from "react-router-dom";
+// eslint-disable-next-line
+import { Link, NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import clsx from "clsx";
 import s from "./Navigation.module.scss";
 
 const ActiveNavLink = styled(NavLink)`
@@ -19,44 +19,24 @@ const ActiveNavLink = styled(NavLink)`
 `;
 
 const Navigation = () => {
+  const location = useLocation();
+
+  console.log(location);
+
   return (
     <nav className={s.nav}>
       <ul className={s.navList}>
         <li className={s.navItem}>
           <ActiveNavLink to="/">Home</ActiveNavLink>
-          {/* <NavLink
-            to="/"
-            className={({ isActive }) =>
-              clsx(s.navLink, isActive && s.activeLink)
-            }
-            // style={({ isActive }) => ({
-            //   background: isActive ? "red" : "green",
-            // })}
-          >
-            Home
-          </NavLink> */}
-          {/* <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              clsx(s.navLink, isActive && s.activeLink)
-            }
-          >
-            About
-          </NavLink> */}
-          {/* <NavLink
-            to="/news"
-            className={({ isActive }) =>
-              clsx(s.navLink, isActive && s.activeLink)
-            }
-          >
-            News
-          </NavLink> */}
         </li>
         <li className={s.navItem}>
           <ActiveNavLink to="/about">About</ActiveNavLink>
         </li>
         <li className={s.navItem}>
-          <ActiveNavLink to="/news">News</ActiveNavLink>
+          <ActiveNavLink to="/country-news" state={location}>Country News</ActiveNavLink>
+        </li>
+        <li className={s.navItem}>
+          <ActiveNavLink to="/search-news">Search News</ActiveNavLink>
         </li>
       </ul>
     </nav>

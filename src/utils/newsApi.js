@@ -16,7 +16,7 @@ export const getTopNews = (country, page = 1) => {
     .then((response) => response.data);
 };
 
-export const getSearchNews = (page = 1, query) => {
+export const getSearchNews = (query, page = 1) => {
   return axios
     .get("/everything", {
       params: {

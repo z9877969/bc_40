@@ -1,13 +1,17 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import AboutPage from "../pages/AboutPage";
-import HomePage from "../pages/HomePage";
-import NewsPage from "../pages/NewsPage";
-import CountryNews from "./CountryNews/CountryNews";
+// import AboutPage from "../pages/AboutPage";
+// import HomePage from "../pages/HomePage";
+// import NewsPage from "../pages/CountryNewsPage";
+// import SearchNewsPage from "../pages/SearchNewsPage";
+// import CountryNews from "./CountryNews/CountryNews";
 import SharedLayout from "./SharedLayout/SharedLayout";
 
-// homePage -> /home
-// aboutPage -> /about
-// newsPage -> /news
+const HomePage = lazy(() => import("../pages/HomePage"));
+const AboutPage = lazy(() => import("../pages/AboutPage"));
+const NewsPage = lazy(() => import("../pages/CountryNewsPage"));
+const CountryNews = lazy(() => import("./CountryNews/CountryNews"));
+const SearchNewsPage = lazy(() => import("../pages/SearchNewsPage"));
 
 const App = () => {
   return (
@@ -16,13 +20,10 @@ const App = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/news" element={<NewsPage />}>
+          <Route path="/country-news" element={<NewsPage />}>
             <Route path=":country" element={<CountryNews />} />
-            {/* <Route path="ua" element={<h2>News UA</h2>} />
-          <Route path="fr" element={<h2>News FR</h2>} />
-          <Route path="pl" element={<h2>News PL</h2>} />
-          <Route path="us" element={<h2>News US</h2>} /> */}
           </Route>
+          <Route path="/search-news" element={<SearchNewsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
@@ -32,3 +33,5 @@ const App = () => {
 };
 
 export default App;
+
+// Link -> <a></a> | navigate
