@@ -1,10 +1,7 @@
-import { useEffect,useState, useRef } from "react";
 import s from "./TodoItem.module.scss";
 import sprite from "../../assets/icons/sprite.svg";
 
 const TodoItem = ({ title, id, date, priority, removeTodo }) => {
-  
-
   return (
     <li key={id} className={s.toDoItem}>
       <p className={s.date}>{date}</p>
@@ -22,16 +19,6 @@ const TodoItem = ({ title, id, date, priority, removeTodo }) => {
       >
         <svg className={s.icon}>
           <use href={sprite + "#icon-trash"}></use>
-        </svg>
-      </button>
-      <button
-        className={s.todoBtn}
-        onClick={() => {
-          console.log("Edit");
-        }}
-      >
-        <svg className={s.icon}>
-          <use href={sprite + "#icon-edit-pencil"}></use>
         </svg>
       </button>
     </li>

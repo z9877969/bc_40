@@ -30,17 +30,8 @@ const TodoForm = ({ addTodo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTodo({ ...form, id: uuidv4() }); // start addTodo
+    addTodo({ ...form, id: uuidv4() }); 
   };
-
-  // console.log("RENDER_FORM");
-
-  // let n = 0;
-  // while (n < 1e9) {
-  //   n++
-  // }
-
-  // console.log("RENDER_FORM_AFTER_CYCLE");
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
