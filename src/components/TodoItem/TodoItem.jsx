@@ -1,7 +1,11 @@
+import { useDispatch } from "react-redux";
 import s from "./TodoItem.module.scss";
+import { removeTodo } from "../../redux/todo/todoActions";
 import sprite from "../../assets/icons/sprite.svg";
 
-const TodoItem = ({ title, id, date, priority, removeTodo }) => {
+const TodoItem = ({ title, id, date, priority }) => {
+  const dispatch = useDispatch();
+
   return (
     <li key={id} className={s.toDoItem}>
       <p className={s.date}>{date}</p>
@@ -14,7 +18,7 @@ const TodoItem = ({ title, id, date, priority, removeTodo }) => {
       <button
         className={s.todoBtn}
         onClick={() => {
-          removeTodo(id);
+          dispatch(removeTodo(id));
         }}
       >
         <svg className={s.icon}>

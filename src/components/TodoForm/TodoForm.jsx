@@ -1,6 +1,8 @@
 import { memo } from "react";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { addTodo } from "../../redux/todo/todoActions";
 import s from "./TodoForm.module.scss";
 
 const getCurDate = () => {
@@ -11,7 +13,9 @@ const getCurDate = () => {
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 };
 
-const TodoForm = ({ addTodo }) => {
+const TodoForm = () => {
+  const dispatch = useDispatch();
+
   const [form, setForm] = useLocalStorage("todoForm", {
     date: getCurDate(),
     title: "",
@@ -30,7 +34,7 @@ const TodoForm = ({ addTodo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTodo({ ...form, id: uuidv4() }); 
+    dispatch(addTodo({ ...form, id: uuidv4() }));
   };
 
   return (

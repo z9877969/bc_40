@@ -1,8 +1,12 @@
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { changeFilter } from "../../redux/todo/todoActions";
 import s from "./PrioritySelect.module.scss";
 
+const PrioritySelect = () => {
+  const dispatch = useDispatch();
 
-const PrioritySelect = ({ value, onChange }) => {
+  const filter = useSelector((state) => state.todo.filter);
+
   return (
     <div className={s.container}>
       <label className={s.title} htmlFor="priority-filter">
@@ -11,8 +15,10 @@ const PrioritySelect = ({ value, onChange }) => {
       <select
         className={s.select}
         name="priority"
-        value={value}
-        onChange={onChange}
+        value={filter}
+        onChange={(e) => {
+          dispatch(changeFilter(e.target.value));
+        }}
         id="priority-filter"
       >
         <option value="all">All</option>
@@ -22,11 +28,6 @@ const PrioritySelect = ({ value, onChange }) => {
       </select>
     </div>
   );
-};
-
-PrioritySelect.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default PrioritySelect;
