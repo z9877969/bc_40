@@ -7,7 +7,6 @@ import s from "./TodoForm.module.scss";
 
 const getCurDate = () => {
   const date = new Date();
-
   return `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;

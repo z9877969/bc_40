@@ -12,7 +12,6 @@ const Counter = () => {
 
   return (
     <div className={s.container}>
-      {/* select */}
       <h1 className={s.title}>Counter</h1>
       <p className={s.count}>{count}</p>
       <div className={s.btnsWrapper}>
