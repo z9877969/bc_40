@@ -1,16 +1,10 @@
-import { TODO_ADD, TODO_CHANGE_FILTER, TODO_REMOVE } from "./todoConstants";
+import { createAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 
-export const addTodo = (todo) => ({
-  type: TODO_ADD,
-  payload: todo,
+export const addTodo = createAction("todo/add", (form) => {
+  return {
+    payload: { ...form, id: uuidv4() },
+  };
 });
-
-export const removeTodo = (id) => ({
-  type: TODO_REMOVE,
-  payload: id,
-});
-
-export const changeFilter = (value) => ({
-  type: TODO_CHANGE_FILTER,
-  payload: value,
-});
+export const removeTodo = createAction("todo/remove");
+export const changeFilter = createAction("todo/change/filter");
