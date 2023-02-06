@@ -1,56 +1,44 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
-// import countReducer from "./count/countReducer";
-// import todoReducer from "./todo/todoReducer";
+import { configureStore } from "@reduxjs/toolkit";
+// import reduxLogger from "redux-logger";
 import countReducer from "./count/countSlice";
 import todoReducer from "./todo/todoSlice";
-// import { todo } from "../data/todo";
 
-// const rootReducer = combineReducers({
-//   count: countReducer,
-//   todo: todoReducer,
-// });
+const customLogger = function (store) {
+  return function (next) {
+    return function (action) {
+      console.group(action.type);
+      const prevState = store.getState();
 
-const persistTodoConfig = {
-  key: "todo",
-  version: 1,
-  storage: storage,
-  // whitelist: ["items"],
-  blacklist: ["filter"],
+      console.log("prevState ", prevState);
+      console.log("action ", action);
+      next(action); // action -> reducer -> reducer change state
+
+      const nextState = store.getState();
+      console.log("nextState", nextState);
+      console.groupEnd();
+    };
+  };
 };
 
-const persistedTodoReducer = persistReducer(persistTodoConfig, todoReducer);
+const thunk = (store) => (next) => (action) => {
+  if (typeof action === "function") {
+    action(store.dispatch, store.getState);
+    return;
+  }
+  next(action);
+};
+
+// middleware(store)(next)(action);
 
 export const store = configureStore({
-  // reducer: rootReducer
   reducer: {
     count: countReducer,
-    todo: persistedTodoReducer,
+    todo: todoReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-  // preloadedState: {
-  //   count: 50,
-  //   todo: {
-  //     items: todo,
-  //     filter: "medium",
-  //   },
-  // },
+    getDefaultMiddleware().concat(
+      customLogger
+      //  thunk
+    ),
   devTools: process.env.NODE_ENV === "development",
 });
-
-export const persistor = persistStore(store);

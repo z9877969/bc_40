@@ -19,5 +19,3 @@ const countSlice = createSlice({
 export const { increment, decrement, reset } = countSlice.actions;
 
 export default countSlice.reducer;
-
-// countSlice -> reducer & actions / count/qwe | count/increment /

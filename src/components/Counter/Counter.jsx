@@ -1,10 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment, reset } from "../../redux/count/countSlice";
-// import {
-//   countDecrementAction,
-//   countIncrementAction,
-//   countResetAction,
-// } from "../../redux/count/countActions";
 import s from "./Counter.module.scss";
 
 const Counter = () => {

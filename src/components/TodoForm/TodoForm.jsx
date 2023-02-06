@@ -1,9 +1,7 @@
 import { memo } from "react";
 import { useDispatch } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-// import { addTodo } from "../../redux/todo/todoActions";
-import { add } from "../../redux/todo/todoSlice";
+import { addTodo } from "../../redux/todo/todoOperations";
 import s from "./TodoForm.module.scss";
 
 const getCurDate = () => {
@@ -32,11 +30,16 @@ const TodoForm = () => {
     });
   };
 
+  // isLoading: false
+  // error: null
+  // todo: []
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(add(form)); // with prepare in todoSlice
-    dispatch(add({ ...form, id: uuidv4() }));
+    dispatch(addTodo(form)); // request -> success | error
   };
+
+  console.log("render_Form");
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
