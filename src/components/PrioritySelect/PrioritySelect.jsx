@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
+import { getFilter, selectorTodoFilter } from "../../redux/todo/todoSelectors";
 import { changeFilter } from "../../redux/todo/todoSlice";
 import s from "./PrioritySelect.module.scss";
 
 const PrioritySelect = () => {
   const dispatch = useDispatch();
 
-  const filter = useSelector((state) => state.todo.filter);
+  const filter = useSelector(selectorTodoFilter);
 
   return (
     <div className={s.container}>

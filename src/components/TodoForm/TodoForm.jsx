@@ -1,7 +1,8 @@
 import { memo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { addTodo } from "../../redux/todo/todoOperations";
+import { getFilter } from "../../redux/todo/todoSelectors";
 import s from "./TodoForm.module.scss";
 
 const getCurDate = () => {
@@ -13,6 +14,8 @@ const getCurDate = () => {
 
 const TodoForm = () => {
   const dispatch = useDispatch();
+
+  // const filter = useSelector(getFilter);
 
   const [form, setForm] = useLocalStorage("todoForm", {
     date: getCurDate(),
@@ -29,10 +32,6 @@ const TodoForm = () => {
       };
     });
   };
-
-  // isLoading: false
-  // error: null
-  // todo: []
 
   const handleSubmit = (e) => {
     e.preventDefault();

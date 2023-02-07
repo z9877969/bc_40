@@ -1,10 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment, reset } from "../../redux/count/countSlice";
+import { getFilter } from "../../redux/todo/todoSelectors";
 import s from "./Counter.module.scss";
 
 const Counter = () => {
   const dispatch = useDispatch();
   const count = useSelector((state) => state.count);
+
+  // const filter = useSelector(getFilter); // state => state.todo.filter
 
   return (
     <div className={s.container}>

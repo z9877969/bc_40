@@ -5,20 +5,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTodo } from "../redux/todo/todoOperations";
 import Loader from "../components/Loader/Loader";
+import { toggle } from "../redux/todo/todoSlice";
 
 const TodoPage = () => {
   const dispatch = useDispatch();
-  const isTodoExist = useSelector((state) => Boolean(state.todo.items.length));
 
   useEffect(() => {
-    !isTodoExist && dispatch(getTodo());
-  }, [dispatch, isTodoExist]);
+    dispatch(getTodo());
+  }, [dispatch]);
 
   console.log("render_Page");
 
   return (
     <>
       <ToDoForm />
+      <button onClick={() => dispatch(toggle())}>Toggle</button>
       <PrioritySelect />
       <Loader />
       <ToDoList />
