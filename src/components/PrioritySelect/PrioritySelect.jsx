@@ -1,12 +1,19 @@
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  useCustomDispatch,
+  useCustomSelector,
+} from "../../context/ReactReduxContext";
 import { getFilter, selectorTodoFilter } from "../../redux/todo/todoSelectors";
 import { changeFilter } from "../../redux/todo/todoSlice";
 import s from "./PrioritySelect.module.scss";
 
 const PrioritySelect = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch = useCustomDispatch();
 
-  const filter = useSelector(selectorTodoFilter);
+  // const filter = useSelector(selectorTodoFilter);
+  const filter = useCustomSelector(selectorTodoFilter);
 
   return (
     <div className={s.container}>

@@ -2,9 +2,10 @@ import { useDispatch } from "react-redux";
 import s from "./TodoItem.module.scss";
 import sprite from "../../assets/icons/sprite.svg";
 import { removeTodo } from "../../redux/todo/todoOperations";
+import { useCustomDispatch } from "../../context/ReactReduxContext";
 
 const TodoItem = ({ title, id, date, priority }) => {
-  const dispatch = useDispatch();
+  const dispatch = useCustomDispatch();
 
   return (
     <li key={id} className={s.toDoItem}>

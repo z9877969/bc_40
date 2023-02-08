@@ -1,11 +1,15 @@
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
+import {
+  useCustomDispatch,
+  useCustomSelector,
+} from "../../context/ReactReduxContext";
 import { decrement, increment, reset } from "../../redux/count/countSlice";
 import { getFilter } from "../../redux/todo/todoSelectors";
 import s from "./Counter.module.scss";
 
 const Counter = () => {
-  const dispatch = useDispatch();
-  const count = useSelector((state) => state.count);
+  const dispatch = useCustomDispatch();
+  const count = useCustomSelector((state) => state.count);
 
   // const filter = useSelector(getFilter); // state => state.todo.filter
 

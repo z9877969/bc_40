@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
+import { useCustomSelector } from "../../context/ReactReduxContext";
 import { selectorFilteredTodo } from "../../redux/todo/todoSelectors";
 import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.css";
 
 const TodoList = () => {
-  const filteredTodo = useSelector(selectorFilteredTodo);
+  const filteredTodo = useCustomSelector(selectorFilteredTodo);
   // ref1 | ref2 | ref3
 
-  console.log("render_TodoList");
+  // console.log("render_TodoList");
 
   return (
     <>

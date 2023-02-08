@@ -10,3 +10,5 @@ export const store = configureStore({
   middleware: (gDM) => [...gDM()],
   devTools: process.env.NODE_ENV === "development",
 });
+
+// console.log('store :>> ', store);

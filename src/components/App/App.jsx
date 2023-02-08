@@ -2,8 +2,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import TodoPage from "../../pages/TodoPage";
 import CounterPage from "../../pages/CounterPage";
+// import { useCustomSelector } from "../../context/ReactReduxContext";
 
 const App = () => {
+  // const value = useCustomSelector(state => state);
+
   return (
     <>
       <Navigation />

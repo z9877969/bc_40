@@ -5,9 +5,9 @@ const todoSlice = createSlice({
   name: "todo",
   initialState: {
     items: [],
-    filter: "all",
     isLoading: false,
     error: null,
+    filter: "all",
     isOpen: false,
   },
   reducers: {
@@ -23,21 +23,12 @@ const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(addTodo.pending, (state) => {
-      //   state.isLoading = true;
-      // })
       .addCase(addTodo.fulfilled, (state, { payload }) => {
-        // state.isLoading = false;
         state.items.push(payload);
       })
       .addCase(getTodo.fulfilled, (state, { payload }) => {
-        // state.isLoading = false;
         state.items = payload;
       })
-      // .addCase(getTodo.rejected, (state, { payload }) => {
-      //   state.isLoading = false;
-      //   state.error = payload;
-      // })
       .addCase(removeTodo.fulfilled, (state, { payload }) => {
         state.items = state.items.filter((el) => el.id !== payload);
       })
