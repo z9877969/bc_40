@@ -1,27 +1,26 @@
-import { memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { addTodo } from "../../redux/todo/todoOperations";
-import { getFilter } from "../../redux/todo/todoSelectors";
 import s from "./TodoForm.module.scss";
 
-const getCurDate = () => {
+const getFormatedCurDate = () => {
+  console.log("object");
   const date = new Date();
   return `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 };
 
+const getInitialState = () => ({
+  date: getFormatedCurDate(),
+  title: "",
+  priority: "",
+});
+
 const TodoForm = () => {
   const dispatch = useDispatch();
 
-  // const filter = useSelector(getFilter);
-
-  const [form, setForm] = useLocalStorage("todoForm", {
-    date: getCurDate(),
-    title: "",
-    priority: "",
-  });
+  const [form, setForm] = useLocalStorage("todoForm", getInitialState);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +34,8 @@ const TodoForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTodo(form)); // request -> success | error
+    dispatch(addTodo(form));
+    setForm(getInitialState());
   };
 
   console.log("render_Form");
@@ -114,4 +114,4 @@ const TodoForm = () => {
   );
 };
 
-export default memo(TodoForm); // () => {condition + memo return <TodoForm />} + memo
+export default TodoForm; // () => {condition + memo return <TodoForm />} + memo

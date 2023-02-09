@@ -23,42 +23,27 @@ const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(addTodo.pending, (state) => {
-      //   state.isLoading = true;
-      // })
       .addCase(addTodo.fulfilled, (state, { payload }) => {
-        // state.isLoading = false;
         state.items.push(payload);
       })
       .addCase(getTodo.fulfilled, (state, { payload }) => {
-        // state.isLoading = false;
         state.items = payload;
       })
-      // .addCase(getTodo.rejected, (state, { payload }) => {
-      //   state.isLoading = false;
-      //   state.error = payload;
-      // })
       .addCase(removeTodo.fulfilled, (state, { payload }) => {
         state.items = state.items.filter((el) => el.id !== payload);
       })
       .addMatcher(
         (action) =>
-          action.type.startsWith("todo/") && action.type.endsWith("/fulfilled"),
+          action.type.startsWith("todo/") && action.type.endsWith("/pending"),
         (state) => {
-          state.isLoading = false;
+          state.isLoading = true;
         }
       )
       .addMatcher(
-        (action) => {
-          if (
-            action.type.startsWith("todo/") &&
-            action.type.endsWith("/pending")
-          )
-            return true;
-          return false;
-        },
+        (action) =>
+          action.type.startsWith("todo/") && action.type.endsWith("/fulfilled"),
         (state) => {
-          state.isLoading = true;
+          state.isLoading = false;
         }
       )
       .addMatcher(

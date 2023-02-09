@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getFilter, selectorTodoFilter } from "../../redux/todo/todoSelectors";
+import { selectorTodoFilter } from "../../redux/todo/todoSelectors";
 import { changeFilter } from "../../redux/todo/todoSlice";
 import s from "./PrioritySelect.module.scss";
 

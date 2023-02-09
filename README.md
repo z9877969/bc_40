@@ -1,7 +1,9 @@
 # BC_40
 
-# Lesson-14(asyncThunk-selectors)
+# Lesson-16(auth)
 
-### 1. createAsyncThunk -> condition
-### 2. selectors
-### 3. reselect
+
+### 1. auth-request & token ринцип, як це працює
+### 2. Routes, RegisterPage/LoginPage, Navigate
+### 3. AuthForm(shared)
+### 4. logout
