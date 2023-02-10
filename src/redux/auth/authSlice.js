@@ -1,16 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCurUser, loginUser, registerUser } from "./authOperations";
+import {
+  getCurUser,
+  loginUser,
+  refreshToken,
+  registerUser,
+} from "./authOperations";
+
+const initialState = {
+  isAuth: false,
+  email: null,
+  idToken: null,
+  localId: null,
+  refreshToken: null,
+  isLoading: false,
+  error: null,
+};
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    isAuth: false,
-    email: null,
-    idToken: null,
-    localId: null,
-    refreshToken: null,
-    isLoading: false,
-    error: null,
+  initialState,
+  reducers: {
+    logOut() {
+      return { ...initialState };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -35,6 +47,12 @@ const authSlice = createSlice({
           ...payload,
         };
       })
+      .addCase(refreshToken.fulfilled, (state, { payload }) => {
+        return {
+          ...state,
+          ...payload,
+        };
+      })
       .addMatcher(
         (action) =>
           action.type.startsWith("auth/") && action.type.endsWith("/pending"),
@@ -47,6 +65,7 @@ const authSlice = createSlice({
           action.type.startsWith("auth/") && action.type.endsWith("/fulfilled"),
         (state) => {
           state.isLoading = false;
+          state.error = null;
         }
       )
       .addMatcher(
@@ -60,4 +79,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { logOut } = authSlice.actions;
 export default authSlice.reducer;

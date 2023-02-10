@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logOut } from "../auth/authSlice";
 
 const countSlice = createSlice({
   name: "count",
@@ -13,6 +14,9 @@ const countSlice = createSlice({
     reset() {
       return 80;
     },
+  },
+  extraReducers: (b) => {
+    b.addCase(logOut, (state) => 80);
   },
 });
 

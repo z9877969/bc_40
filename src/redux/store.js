@@ -17,12 +17,12 @@ import todoReducer from "./todo/todoSlice";
 const authPersistConfig = {
   key: "token",
   storage,
-  whitelist: ["idToken"]
-}
+  whitelist: ["idToken", "refreshToken"],
+};
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig ,authReducer) ,
+    auth: persistReducer(authPersistConfig, authReducer),
     count: countReducer,
     todo: todoReducer,
   },

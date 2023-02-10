@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logOut } from "../auth/authSlice";
 import { addTodo, getTodo, removeTodo } from "./todoOperations";
+
+const initialState = {
+  items: [],
+  filter: "all",
+  isLoading: false,
+  error: null,
+  isOpen: false,
+};
 
 const todoSlice = createSlice({
   name: "todo",
-  initialState: {
-    items: [],
-    filter: "all",
-    isLoading: false,
-    error: null,
-    isOpen: false,
-  },
+  initialState,
   reducers: {
     changeFilter(state, { payload }) {
       return {
@@ -23,6 +26,7 @@ const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(logOut, () => ({ ...initialState }))
       .addCase(addTodo.fulfilled, (state, { payload }) => {
         state.items.push(payload);
       })
@@ -44,6 +48,7 @@ const todoSlice = createSlice({
           action.type.startsWith("todo/") && action.type.endsWith("/fulfilled"),
         (state) => {
           state.isLoading = false;
+          state.error = null;
         }
       )
       .addMatcher(

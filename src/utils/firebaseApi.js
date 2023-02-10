@@ -7,30 +7,43 @@ const API_KEY = "AIzaSyDz0LKqNwioMP8Fe8hlPj-LfAdTtazYiGY";
 const baseUrl = {
   DB: "https://bc-40-414ee-default-rtdb.firebaseio.com",
   AUTH: "https://identitytoolkit.googleapis.com/v1",
+  REFRESH: "https://securetoken.googleapis.com/v1",
 };
 
 const setBaseUrl = (url) => (axios.defaults.baseURL = url);
 
-const setToken = (token) =>
-  (axios.defaults.headers.common.Authorization = `Bearer ${token}`);
+// const setToken = (token) =>
+//   (axios.defaults.headers.common.Authorization = `Bearer ${token}`);
 
-export const addTodoApi = (todo) => {
+// https://bc-40-414ee-default-rtdb.firebaseio.com/users/localId/todo.json?auth=idToken"
+export const addTodoApi = ({ todo, localId, idToken }) => {
+  setBaseUrl(baseUrl.DB);
   return axios
-    .post("/todo.json", todo)
+    .post(`/users/${localId}/todo.json`, todo, { params: { auth: idToken } })
     .then((res) => res.data)
     .then((data) => ({ ...todo, id: data.name }));
 };
 
-export const getTodoApi = () => {
-  return axios.get("/todo.json").then(({ data }) => {
-    return Object.entries(data).map(([id, data]) => ({ ...data, id }));
-  });
+// addTodoApi({localId: "qtrqetewtrqw", todo: {}, idToken: "qwlkljrlkj"});
+
+export const getTodoApi = ({ localId, idToken }) => {
+  setBaseUrl(baseUrl.DB);
+  return axios
+    .get(`/users/${localId}/todo.json`, { params: { auth: idToken } })
+    .then(({ data }) => {
+      return data
+        ? Object.entries(data).map(([id, data]) => ({ ...data, id }))
+        : [];
+    });
 };
 
-export const removeTodoApi = (id) => {
-  return axios.delete(`/todo/${id}.json`).then(() => {
-    return id;
-  });
+export const removeTodoApi = ({ id, localId, idToken }) => {
+  setBaseUrl(baseUrl.DB);
+  return axios
+    .delete(`/users/${localId}/todo/${id}.json`, { params: { auth: idToken } })
+    .then(() => {
+      return id;
+    });
 };
 
 // https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
@@ -60,7 +73,7 @@ export const registerUserApi = ({ email, password }) => {
 
 // https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
 export const loginUserApi = (userData) => {
-  setBaseUrl(baseUrl.AUTH);
+  setBaseUrl(baseUrl.AUTH); // baseUrl = AUTH
   return axios
     .post(
       "/accounts:signInWithPassword",
@@ -100,4 +113,22 @@ export const getCurUserApi = (idToken) => {
       const { localId, email } = data.users[0];
       return { localId, email };
     });
+};
+
+// https://securetoken.googleapis.com/v1/token?key=[API_KEY]
+export const refreshTokenApi = (refreshToken) => {
+  setBaseUrl(baseUrl.REFRESH);
+  return axios
+    .post(
+      "/token",
+      {
+        grant_type: "refresh_token",
+        refresh_token: refreshToken,
+      },
+      { params: { key: API_KEY } }
+    )
+    .then(({ data: { refresh_token, id_token } }) => ({
+      idToken: id_token,
+      refreshToken: refresh_token,
+    }));
 };

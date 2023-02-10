@@ -1,9 +1,8 @@
 # BC_40
 
-# Lesson-16(auth)
+# Lesson-17(restricted-routes)
 
-
-### 1. auth-request & token ринцип, як це працює
-### 2. Routes, RegisterPage/LoginPage, Navigate
-### 3. AuthForm(shared)
-### 4. logout
+### 1. logout
+### 2. handle user data - CRUD
+### 3. RestrictedRoutes
+### 4. errorHandler

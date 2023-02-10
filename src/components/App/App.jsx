@@ -9,13 +9,35 @@ import LoginPage from "../../pages/LoginPage";
 import { useEffect } from "react";
 import { getCurUser } from "../../redux/auth/authOperations";
 
+const PrivateRoute = ({ component, redirectTo = "/login" }) => {
+  const isAuth = useSelector(selectorIsAuth);
+
+  return isAuth ? component : <Navigate to={redirectTo} />;
+};
+
+const PublicRoute = ({ redirectTo = "/counter", component }) => {
+  const isAuth = useSelector(selectorIsAuth);
+
+  return !isAuth ? component : <Navigate to={redirectTo} />;
+};
+
+const ErrorContainer = () => {
+  const error = useSelector((state) => state.auth.error || state.todo.error);
+
+  useEffect(() => {
+    error && alert(error);
+  }, [error]);
+
+  return null;
+};
+
 const App = () => {
   const dispatch = useDispatch();
 
-  const isAuth = useSelector(selectorIsAuth); // false
+  // const isAuth = useSelector(selectorIsAuth); // false
 
   useEffect(() => {
-    dispatch(getCurUser());
+    dispatch(getCurUser()); // -> localId
   }, [dispatch]);
 
   return (
@@ -24,36 +46,27 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<h1>HomePage</h1>} />
-        {isAuth ? (
-          <>
-            <Route path="/counter" element={<CounterPage />} />
-            <Route path="/todo" element={<TodoPage />} />
-            <Route path="*" element={<Navigate to={"/counter"} />} />
-          </>
-        ) : (
-          <>
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<Navigate to={"/login"} />} />
-          </>
-        )}
+        <Route
+          path="/counter"
+          element={<PrivateRoute redirectTo="/" component={<CounterPage />} />}
+        />
+        <Route
+          path="/todo"
+          element={<PrivateRoute component={<TodoPage />} />}
+        />
+        <Route
+          path="/register"
+          element={<PublicRoute component={<RegisterPage />} />}
+        />
+        <Route
+          path="/login"
+          element={<PublicRoute component={<LoginPage />} />}
+        />
+        <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
+      <ErrorContainer />
     </>
   );
 };
 
 export default App;
-
-// {
-//   users: {
-//     user1: {
-//       todo: {
-//         eiwuyiuyiuyi: {
-//           title: "",
-//           date: "",
-//           priority: ""
-//         }
-//       }
-//     }
-//   }
-// }
