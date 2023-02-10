@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import TodoPage from "../../pages/TodoPage";
 import CounterPage from "../../pages/CounterPage";
@@ -8,11 +8,13 @@ import RegisterPage from "../../pages/ReagisterPage";
 import LoginPage from "../../pages/LoginPage";
 import { useEffect } from "react";
 import { getCurUser } from "../../redux/auth/authOperations";
+import { useAuth } from "../../hooks/useAuth";
+import { resetIsRefreshing } from "../../redux/auth/authSlice";
 
 const PrivateRoute = ({ component, redirectTo = "/login" }) => {
-  const isAuth = useSelector(selectorIsAuth);
+  const { shouldRedirectToPublicRoute } = useAuth();
 
-  return isAuth ? component : <Navigate to={redirectTo} />;
+  return shouldRedirectToPublicRoute ? <Navigate to={redirectTo} /> : component;
 };
 
 const PublicRoute = ({ redirectTo = "/counter", component }) => {
@@ -21,24 +23,21 @@ const PublicRoute = ({ redirectTo = "/counter", component }) => {
   return !isAuth ? component : <Navigate to={redirectTo} />;
 };
 
-const ErrorContainer = () => {
-  const error = useSelector((state) => state.auth.error || state.todo.error);
-
-  useEffect(() => {
-    error && alert(error);
-  }, [error]);
-
-  return null;
-};
-
 const App = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   // const isAuth = useSelector(selectorIsAuth); // false
 
   useEffect(() => {
     dispatch(getCurUser()); // -> localId
   }, [dispatch]);
+
+  useEffect(() => {
+    if (pathname === "/login" || pathname === "/register") {
+      dispatch(resetIsRefreshing());
+    }
+  }, []);
 
   return (
     <>
@@ -64,7 +63,6 @@ const App = () => {
         />
         <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
-      <ErrorContainer />
     </>
   );
 };

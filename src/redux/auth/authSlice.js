@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   isAuth: false,
+  isRefreshing: true,
   email: null,
   idToken: null,
   localId: null,
@@ -21,7 +22,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logOut() {
-      return { ...initialState };
+      return { ...initialState, isRefreshing: false };
+    },
+    resetIsRefreshing(state) {
+      state.isRefreshing = false;
     },
   },
   extraReducers: (builder) => {
@@ -44,6 +48,7 @@ const authSlice = createSlice({
         return {
           ...state,
           isAuth: true,
+          isRefreshing: false,
           ...payload,
         };
       })
@@ -56,7 +61,10 @@ const authSlice = createSlice({
       .addMatcher(
         (action) =>
           action.type.startsWith("auth/") && action.type.endsWith("/pending"),
-        (state) => {
+        (state, { type }) => {
+          if (!type.includes("getCurUser")) {
+            state.isRefreshing = false;
+          }
           state.isLoading = true;
         }
       )
@@ -79,5 +87,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logOut } = authSlice.actions;
+export const { logOut, resetIsRefreshing } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,12 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectorIsAuth } from "../../redux/auth/authSelectors";
+import { useDispatch } from "react-redux";
+import { useAuth } from "../../hooks/useAuth";
 import { logOut } from "../../redux/auth/authSlice";
 import { ActiveNavLink, NavContainer } from "./Navigation.styled";
 
 const Navigation = () => {
   const dispatch = useDispatch();
 
-  const isAuth = useSelector(selectorIsAuth);
+  // const isAuth = useSelector(selectorIsAuth);
+  const { shouldRedirectToPublicRoute } = useAuth();
 
   return (
     <NavContainer>
@@ -14,7 +15,7 @@ const Navigation = () => {
         <li>
           <ActiveNavLink to="/">Home</ActiveNavLink>
         </li>
-        {isAuth ? (
+        {!shouldRedirectToPublicRoute ? (
           <>
             <li>
               <ActiveNavLink to="/counter">Counter</ActiveNavLink>
@@ -34,7 +35,7 @@ const Navigation = () => {
           </>
         )}
       </ul>
-      {isAuth && (
+      {!shouldRedirectToPublicRoute && (
         <button type="button" onClick={() => dispatch(logOut())}>
           LogOut
         </button>
